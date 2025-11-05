@@ -6,19 +6,19 @@ const contactInfo = [
   {
     icon: IconMail,
     label: "Email",
-    value: "contato@vetryn.com",
-    link: "mailto:contato@vetryn.com",
+    value: "Vetryn.dev@gmail.com",
+    link: "mailto:Vetryn.dev@gmail.com",
   },
   {
     icon: IconPhone,
     label: "Telefone",
-    value: "+55 (11) 99999-9999",
-    link: "tel:+5511999999999",
+    value: "+55 (51) 99544-1664",
+    link: "tel:+5551995441663",
   },
   {
     icon: IconMapPin,
     label: "Localização",
-    value: "São Paulo, Brasil",
+    value: "Porto Alegre, Brasil",
     link: "#",
   },
 ];

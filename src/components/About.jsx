@@ -32,6 +32,8 @@ export default function About() {
   return (
     <section id="about" className="py-24 bg-white">
       <div className="container mx-auto px-4">
+        {/* animation removed from main screen */}
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
