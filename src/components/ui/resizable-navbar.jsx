@@ -72,7 +72,7 @@ export const NavItems = ({ items, className, onItemClick }) => {
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
+        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-primary-dark transition duration-200 hover:text-primary lg:flex lg:space-x-2",
         className,
       )}
     >
@@ -80,14 +80,14 @@ export const NavItems = ({ items, className, onItemClick }) => {
         <a
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+          className="relative px-4 py-2 text-primary-dark dark:text-primary-content"
           key={`link-${idx}`}
           href={item.link}
         >
           {hovered === idx && (
             <motion.div
               layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+              className="absolute inset-0 h-full w-full rounded-full bg-primary/10 dark:bg-primary/20"
             />
           )}
           <span className="relative z-20">{item.name}</span>
@@ -191,15 +191,15 @@ export const NavbarButton = ({
   ...props
 }) => {
   const baseStyles =
-    "px-4 py-2 rounded-md bg-white button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
+    "px-4 py-2 rounded-md text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 
   const variantStyles = {
     primary:
-      "shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
-    secondary: "bg-transparent shadow-none dark:text-white",
-    dark: "bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
+      "bg-primary text-white shadow-[0_0_24px_rgba(18,_70,_45,_0.2),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(18,_70,_45,_0.1),_0_0_4px_rgba(18,_70,_45,_0.15),_0_16px_68px_rgba(18,_70,_45,_0.1),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] hover:bg-primary-light",
+    secondary: "bg-transparent shadow-none text-primary-dark dark:text-primary-content hover:text-primary",
+    dark: "bg-primary-dark text-white shadow-[0_0_24px_rgba(18,_70,_45,_0.2),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(18,_70,_45,_0.1),_0_0_4px_rgba(18,_70,_45,_0.15),_0_16px_68px_rgba(18,_70,_45,_0.1),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
     gradient:
-      "bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
+      "bg-gradient-to-b from-primary to-primary-light text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
   };
 
   return (

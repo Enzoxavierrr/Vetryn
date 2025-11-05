@@ -40,8 +40,8 @@ export default function NavbarDemo() {
         <NavbarLogo />
         <NavItems items={navItems} />
         <div className="flex items-center gap-4">
-          <NavbarButton variant="secondary" href="#projects">Ver Projetos</NavbarButton>
-          <NavbarButton variant="primary" href="#contact">Fale Conosco</NavbarButton>
+          <NavbarButton variant="primary-light" href="#projects">Ver Projetos</NavbarButton>
+          <NavbarButton variant="primary-light" href="#contact">Fale Conosco</NavbarButton>
         </div>
       </NavBody>
 
@@ -64,7 +64,7 @@ export default function NavbarDemo() {
               key={`mobile-link-${idx}`}
               href={item.link}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="relative text-neutral-600 dark:text-neutral-300"
+              className="relative text-primary-dark dark:text-primary-content"
             >
               <span className="block">{item.name}</span>
             </a>
