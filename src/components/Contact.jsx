@@ -14,7 +14,9 @@ const contactInfo = [
     label: "Telefone",
     value: "+55 (51) 99544-1664",
     link: "tel:+5551995441663",
+  
   },
+  
   {
     icon: IconMapPin,
     label: "Localização",
