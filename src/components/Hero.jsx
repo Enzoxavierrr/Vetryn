@@ -32,11 +32,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="flex-1 text-left max-w-2xl lg:pr-10 xl:pr-14"
+            className="flex-1 text-left max-w-3xl md:max-w-3xl lg:max-w-4xl lg:pr-10 xl:pr-14"
           >
             <div className="mb-10">
               <TextAnimation
-                text="Vetry"
+                text="Vetryn"
                 as="h1"
                 letterAnime={true}
                 direction="down"
@@ -49,7 +49,7 @@ export default function Hero() {
                     transition: { ease: 'linear', duration: 0.6 },
                   },
                 }}
-                classname="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tighter leading-none whitespace-nowrap"
+                classname="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tighter leading-none whitespace-normal md:whitespace-nowrap"
               />
               <motion.div
                 initial={{ width: 0 }}
