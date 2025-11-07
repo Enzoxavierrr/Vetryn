@@ -126,7 +126,7 @@ export default function Hero() {
 
           {/* 3D Spline Animation - Right Side (Square and larger) */}
           <div className="flex-1 w-full lg:flex-none lg:w-auto relative">
-            <div className="ml-auto w-full max-w-[800px] md:max-w-[860px] lg:max-w-[800px] h-[60vh] md:h-[70vh] lg:h-[75vh] relative rounded-2xl">
+            <div className="ml-auto w-full max-w-[1000px] md:max-w-[1100px] lg:max-w-[1200px] h-[75vh] md:h-[85vh] lg:h-[90vh] relative rounded-2xl ring-1 ring-white/10">
               <spline-viewer
                 loading-anim-type="spinner-small-dark"
                 url="https://prod.spline.design/HEFHEapkcxW232BX/scene.splinecode"
