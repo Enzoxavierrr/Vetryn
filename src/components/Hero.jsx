@@ -22,9 +22,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[120vh] flex items-start overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light pt-16 md:pt-24 lg:pt-28">
+    <section className="relative min-h-[120vh] flex items-start overflow-visible bg-gradient-to-br from-primary-dark via-primary to-primary-light pt-16 md:pt-24 lg:pt-28">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0YzAtMS4xLS45LTItMi0ySDI2Yy0xLjEgMC0yIC45LTIgMnY4YzAgMS4xLjkgMiAyIDJoOGMxLjEgMCAyLS45IDItMnYtOHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10 py-10">
         <div className="flex flex-col lg:flex-row items-start justify-between gap-10 md:gap-16 lg:gap-24 xl:gap-32">
           {/* Company Name and Content - Left Side */}
@@ -49,7 +49,7 @@ export default function Hero() {
                     transition: { ease: 'linear', duration: 0.6 },
                   },
                 }}
-                classname="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tighter leading-none whitespace-normal md:whitespace-nowrap"
+                classname="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tighter leading-none whitespace-nowrap"
               />
               <motion.div
                 initial={{ width: 0 }}
@@ -126,15 +126,17 @@ export default function Hero() {
 
           {/* 3D Spline Animation - Right Side (Square and larger) */}
           <div className="flex-1 w-full lg:flex-none lg:w-auto relative">
-            <div className="ml-auto w-[420px] md:w-[560px] lg:w-[800px] aspect-square relative rounded-2xl overflow-hidden">
-              <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.97/build/spline-viewer.js"></script>
-                    <spline-viewer 
-                    url="https://prod.spline.design/us3Fz8uT6hdnzrTA/scene.splinecode"
-                    >
-                    </spline-viewer>
+            <div className="ml-auto w-full max-w-[800px] md:max-w-[860px] lg:max-w-[800px] h-[60vh] md:h-[70vh] lg:h-[75vh] relative rounded-2xl">
+              <spline-viewer
+                loading-anim-type="spinner-small-dark"
+                url="https://prod.spline.design/HEFHEapkcxW232BX/scene.splinecode"
+                style={{ width: '100%', height: '100%', display: 'block' }}
+              >
+              </spline-viewer>
             </div>
           </div>
-  </div>
+        </div>
+
 
         {/* Scroll Indicator */}
         <motion.div

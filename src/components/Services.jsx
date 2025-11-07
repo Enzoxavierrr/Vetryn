@@ -35,9 +35,9 @@ const services = [
   },
   {
     icon: IconApi,
-    title: "API Integration",
-    description: "Integrações com sistemas externos e APIs de terceiros.",
-    tags: ["REST", "GraphQL", "Webhooks"],
+    title: "Phising Test",
+    description: "Testes de engenharia social.",
+    tags: ["Email", "WebSite"],
   },
   {
     icon: IconBrandFigma,
