@@ -1,4 +1,3 @@
-import { motion, useAnimate } from "framer-motion";
 import {
   IconSend,
   IconBrandLinkedin,
@@ -13,8 +12,7 @@ import {
   IconSparkles,
 } from "@tabler/icons-react";
 import { useState } from "react";
-import TeamModal from "./TeamModal";
-import { SpotlightButton } from "./ui/SpotlightButton";
+import { useAnimate } from "framer-motion";
 
 const socialLinks = [
   {
@@ -144,96 +142,16 @@ const SocialLinkBox = ({ Icon, href, label }) => {
   );
 };
 
-const TeamLinkBox = ({ Icon, label, onClick }) => {
-  const [scope, animate] = useAnimate();
-
-  const getNearestSide = (e) => {
-    const box = e.target.getBoundingClientRect();
-
-    const proximityToLeft = {
-      proximity: Math.abs(box.left - e.clientX),
-      side: "left",
-    };
-    const proximityToRight = {
-      proximity: Math.abs(box.right - e.clientX),
-      side: "right",
-    };
-    const proximityToTop = {
-      proximity: Math.abs(box.top - e.clientY),
-      side: "top",
-    };
-    const proximityToBottom = {
-      proximity: Math.abs(box.bottom - e.clientY),
-      side: "bottom",
-    };
-
-    const sortedProximity = [
-      proximityToLeft,
-      proximityToRight,
-      proximityToTop,
-      proximityToBottom,
-    ].sort((a, b) => a.proximity - b.proximity);
-
-    return sortedProximity[0].side;
-  };
-
-  const handleMouseEnter = (e) => {
-    const side = getNearestSide(e);
-    animate(scope.current, {
-      clipPath: ENTRANCE_KEYFRAMES[side],
-    });
-  };
-
-  const handleMouseLeave = (e) => {
-    const side = getNearestSide(e);
-    animate(scope.current, {
-      clipPath: EXIT_KEYFRAMES[side],
-    });
-  };
-
-  return (
-    <button
-      onClick={onClick}
-      aria-label={label}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="relative grid h-full w-full place-content-center transition-all duration-300 cursor-pointer bg-white border border-primary-dark overflow-hidden"
-      style={{ backgroundColor: "white" }}
-    >
-      {/* Fundo branco garantido */}
-      <div className="absolute inset-0 bg-white z-0"></div>
-
-      {/* Ícone inicial - sempre visível no fundo branco */}
-      <div className="relative z-10 w-full h-full grid place-content-center pointer-events-none">
-        <Icon className="text-xl sm:text-3xl lg:text-4xl text-primary-dark" />
-      </div>
-
-      {/* Overlay verde - aparece no hover */}
-      <div
-        ref={scope}
-        style={{
-          clipPath: BOTTOM_RIGHT_CLIP,
-        }}
-        className="absolute inset-0 grid place-content-center bg-primary z-30 pointer-events-none"
-      >
-        <Icon className="text-xl sm:text-3xl md:text-4xl text-white relative z-40" />
-      </div>
-    </button>
-  );
-};
-
-export default function Contact() {
+export default function ContactContent() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
-  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aqui você pode adicionar a lógica de envio do formulário
     console.log("Form submitted:", formData);
     alert("Mensagem enviada com sucesso! Entraremos em contato em breve.");
     setFormData({ name: "", email: "", subject: "", message: "" });
@@ -247,37 +165,21 @@ export default function Contact() {
   };
 
   return (
-    <section
-      id="contact"
-      className="py-24 bg-gradient-to-b from-gray-50 to-primary-dark/5"
-    >
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4">
+    <div className="h-full w-full bg-white p-6 md:p-8 lg:p-12 overflow-y-auto">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-4">
             Entre em Contato
           </h2>
-          <div className="w-24 h-1 bg-primary mx-auto mb-6 rounded-full"></div>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg text-gray-600">
             Estamos prontos para ajudar você a transformar suas ideias em
-            realidade. Entre em contato e vamos conversar!
+            realidade.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {/* Social Media Links */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col"
-          >
+          <div className="flex flex-col">
             <div className="divide-y divide-primary-dark border border-primary-dark rounded-lg overflow-hidden bg-white flex-1 flex flex-col h-full">
               <div className="grid grid-cols-2 divide-x divide-primary-dark flex-1">
                 <SocialLinkBox
@@ -314,37 +216,28 @@ export default function Contact() {
                   href={socialLinks[5].href}
                   label={socialLinks[5].label}
                 />
-                <TeamLinkBox
+                <SocialLinkBox
                   Icon={IconUsers}
-                  label="Quem Somos"
-                  onClick={() => setIsTeamModalOpen(true)}
+                  href="#about"
+                  label="Nossa Equipe"
                 />
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Form */}
-          <motion.form
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
-            <div className="p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200 shadow-xl">
-              {/* Welcome Message */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200 shadow-xl">
               <div className="mb-6 pb-6 border-b border-gray-200">
-                <div className="flex items-center gap-2 mb-3">
-                  <IconSparkles className="w-5 h-5 text-primary" />
-                  <h3 className="text-xl font-bold text-primary-dark">
+                <div className="flex items-center gap-3 mb-3">
+                  <IconSparkles className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                  <h3 className="text-xl md:text-2xl font-bold text-primary-dark">
                     Vamos conversar?
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Estamos aqui para ajudar! Não importa o tamanho do seu
-                  projeto, queremos ouvir suas ideias. Envie uma mensagem e
-                  vamos transformar sua visão em realidade. ✨
+                <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                  Estamos aqui para ajudar! Envie uma mensagem e vamos
+                  transformar sua visão em realidade. ✨
                 </p>
               </div>
 
@@ -353,10 +246,10 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor="name"
-                      className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2"
+                      className="flex items-center gap-2 text-sm md:text-base font-medium text-gray-700 mb-2"
                     >
                       <IconUser className="w-4 h-4 text-primary" />
-                      Como podemos te chamar?
+                      Nome
                     </label>
                     <input
                       type="text"
@@ -365,18 +258,18 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white hover:border-gray-300"
-                      placeholder="Seu nome ou apelido"
+                      className="w-full px-4 py-3 text-base rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white"
+                      placeholder="Seu nome"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="email"
-                      className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2"
+                      className="flex items-center gap-2 text-sm md:text-base font-medium text-gray-700 mb-2"
                     >
                       <IconMail className="w-4 h-4 text-primary" />
-                      Seu melhor email
+                      Email
                     </label>
                     <input
                       type="email"
@@ -385,7 +278,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white hover:border-gray-300"
+                      className="w-full px-4 py-3 text-base rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white"
                       placeholder="seu@email.com"
                     />
                   </div>
@@ -394,9 +287,9 @@ export default function Contact() {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm md:text-base font-medium text-gray-700 mb-2"
                   >
-                    Sobre o que você quer falar?
+                    Assunto
                   </label>
                   <input
                     type="text"
@@ -405,18 +298,18 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white hover:border-gray-300"
-                    placeholder="Ex: Novo projeto, dúvidas, orçamento..."
+                    className="w-full px-4 py-3 text-base rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white"
+                    placeholder="Ex: Novo projeto..."
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="message"
-                    className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2"
+                    className="flex items-center gap-2 text-sm md:text-base font-medium text-gray-700 mb-2"
                   >
                     <IconMessage className="w-4 h-4 text-primary" />
-                    Conte-nos tudo! (sem pressão 😊)
+                    Mensagem
                   </label>
                   <textarea
                     id="message"
@@ -425,34 +318,23 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all resize-none bg-white hover:border-gray-300"
-                    placeholder="Fique à vontade para contar sobre seu projeto, ideias, dúvidas ou qualquer coisa que quiser compartilhar conosco. Estamos ansiosos para saber mais!"
+                    className="w-full px-4 py-3 text-base rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all resize-none bg-white"
+                    placeholder="Conte-nos sobre seu projeto..."
                   />
                 </div>
 
-                <SpotlightButton
+                <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-primary to-primary-light text-white font-bold rounded-xl hover:shadow-2xl"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-primary to-primary-light text-white font-bold rounded-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2 group text-base md:text-lg"
                 >
-                  <div className="flex items-center justify-center gap-2">
-                    <IconSend className="w-5 h-5" />
-                    <span>Fale conosco</span>
-                    <span className="text-sm opacity-80">
-                      (prometemos responder rápido!)
-                    </span>
-                  </div>
-                </SpotlightButton>
+                  <IconSend className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <span>Fale conosco</span>
+                </button>
               </div>
             </div>
-          </motion.form>
+          </form>
         </div>
       </div>
-
-      {/* Team Modal */}
-      <TeamModal
-        isOpen={isTeamModalOpen}
-        onClose={() => setIsTeamModalOpen(false)}
-      />
-    </section>
+    </div>
   );
 }

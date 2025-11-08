@@ -1,12 +1,19 @@
 import { motion } from "framer-motion";
 import { IconArrowRight } from "@tabler/icons-react";
 import TextAnimation from "@/components/ui/scroll-text";
+// import ParticleRing from "./ParticleRing"; // Temporariamente comentado
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light">
+      {/* Particle Ring Background */}
+      {/* Temporariamente comentado para debug */}
+      {/* <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <ParticleRing />
+      </div> */}
+
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0YzAtMS4xLS45LTItMi0ySDI2Yy0xLjEgMC0yIC45LTIgMnY4YzAgMS4xLjkgMiAyIDJoOGMxLjEgMCAyLS45IDItMnYtOHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10 py-20">
         <div className="flex flex-col items-center justify-center min-h-[80vh]">
           {/* Company Name and Content - Centered */}
@@ -23,12 +30,12 @@ export default function Hero() {
                 letterAnime={true}
                 direction="down"
                 variants={{
-                  hidden: { filter: 'blur(10px)', opacity: 0, y: 10 },
+                  hidden: { filter: "blur(10px)", opacity: 0, y: 10 },
                   visible: {
-                    filter: 'blur(0px)',
+                    filter: "blur(0px)",
                     opacity: 1,
                     y: 0,
-                    transition: { ease: 'linear', duration: 0.6 },
+                    transition: { ease: "linear", duration: 0.6 },
                   },
                 }}
                 classname="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tighter leading-none whitespace-nowrap"
@@ -47,9 +54,9 @@ export default function Hero() {
               letterAnime={true}
               direction="left"
               variants={{
-                hidden: { filter: 'blur(4px)', opacity: 0, y: 20 },
+                hidden: { filter: "blur(4px)", opacity: 0, y: 20 },
                 visible: {
-                  filter: 'blur(0px)',
+                  filter: "blur(0px)",
                   opacity: 1,
                   y: 0,
                   transition: {
@@ -65,9 +72,9 @@ export default function Hero() {
               as="p"
               direction="up"
               variants={{
-                hidden: { filter: 'blur(4px)', opacity: 0, y: 20 },
+                hidden: { filter: "blur(4px)", opacity: 0, y: 20 },
                 visible: {
-                  filter: 'blur(0px)',
+                  filter: "blur(0px)",
                   opacity: 1,
                   y: 0,
                   transition: {
@@ -95,9 +102,9 @@ export default function Hero() {
                     letterAnime={true}
                     direction="left"
                     variants={{
-                      hidden: { filter: 'blur(4px)', opacity: 0, y: 20 },
+                      hidden: { filter: "blur(4px)", opacity: 0, y: 20 },
                       visible: {
-                        filter: 'blur(0px)',
+                        filter: "blur(0px)",
                         opacity: 1,
                         y: 0,
                         transition: {
@@ -123,9 +130,9 @@ export default function Hero() {
                     letterAnime={true}
                     direction="right"
                     variants={{
-                      hidden: { filter: 'blur(4px)', opacity: 0, y: 20 },
+                      hidden: { filter: "blur(4px)", opacity: 0, y: 20 },
                       visible: {
-                        filter: 'blur(0px)',
+                        filter: "blur(0px)",
                         opacity: 1,
                         y: 0,
                         transition: {
@@ -164,4 +171,3 @@ export default function Hero() {
     </section>
   );
 }
-
