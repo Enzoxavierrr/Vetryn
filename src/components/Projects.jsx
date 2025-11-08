@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import ProjectCard from "./ProjectCard";
+import Project3DAnimation from "./Project3DAnimation";
 
 // Dados de exemplo - você pode substituir por dados reais
 const projects = [
@@ -72,8 +74,33 @@ const projects = [
 ];
 
 export default function Projects() {
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [showContact, setShowContact] = useState(false);
+
+  const handleStartProject = (e) => {
+    e.preventDefault();
+    setShowAnimation(true);
+    setShowContact(false);
+  };
+
+  const handleFadeStart = () => {
+    // Show contact section when animation starts fading
+    setShowContact(true);
+  };
+
+  const handleAnimationComplete = () => {
+    // Remove animation completely after it finishes
+    setShowAnimation(false);
+  };
+
   return (
-    <section id="projects" className="py-24 bg-white">
+    <section id="projects" className="py-24 bg-white relative">
+      {showAnimation && (
+        <Project3DAnimation 
+          onComplete={handleAnimationComplete} 
+          onFadeStart={handleFadeStart}
+        />
+      )}
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -105,19 +132,24 @@ export default function Projects() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mt-16 text-center"
         >
-          <div className="inline-block p-8 rounded-2xl bg-gradient-to-br from-primary to-primary-light text-white">
+          <div 
+            id="cta-box"
+            className={`inline-block p-8 rounded-2xl bg-gradient-to-br from-primary to-primary-light text-white transition-opacity duration-500 ${
+              showAnimation ? 'opacity-0' : 'opacity-100'
+            }`}
+          >
             <h3 className="text-2xl font-bold mb-4">
               Tem um projeto em mente?
             </h3>
             <p className="mb-6 text-primary-content">
               Vamos conversar sobre como podemos transformar sua ideia em realidade.
             </p>
-            <a
-              href="#contact"
-              className="inline-block px-8 py-3 bg-white text-primary-dark font-bold rounded-full hover:bg-primary-content hover:scale-105 transition-all duration-300"
+            <button
+              onClick={handleStartProject}
+              className="inline-block px-8 py-3 bg-white text-primary-dark font-bold rounded-full hover:bg-gray-100 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               Iniciar Projeto
-            </a>
+            </button>
           </div>
         </motion.div>
       </div>
