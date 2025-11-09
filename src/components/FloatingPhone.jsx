@@ -21,8 +21,11 @@ const FloatingPhone = () => {
         transition={{
           repeat: Infinity,
           repeatType: "mirror",
-          duration: 2,
+          duration: 4,
           ease: "easeInOut",
+        }}
+        style={{
+          transformStyle: "preserve-3d",
         }}
         className="relative h-96 w-56 rounded-[24px] border-2 border-b-4 border-r-4 border-white border-l-neutral-200 border-t-neutral-200 bg-neutral-900 p-1 pl-[3px] pt-[3px]"
       >
@@ -44,6 +47,7 @@ const HeaderBar = () => {
     </>
   );
 };
+
 
 const Screen = () => {
   return (
@@ -67,18 +71,33 @@ const Screen = () => {
         ></path>
       </svg>
 
-      <div className="absolute bottom-4 left-4 right-4 z-10 flex justify-center">
-        <EncryptButton
-          text="Começar Projeto"
-          onClick={(e) => {
-            e.preventDefault();
-            const contactSection = document.getElementById("contact");
-            if (contactSection) {
-              contactSection.scrollIntoView({ behavior: "smooth" });
-            }
+      <div 
+        className="absolute bottom-4 left-4 right-4 z-10 flex justify-center"
+        style={{
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden",
+          willChange: "auto",
+        }}
+      >
+        <div 
+          style={{ 
+            transform: "translateZ(0)",
+            width: "100%",
           }}
-          className="w-full text-xs py-1.5 px-2"
-        />
+        >
+          <EncryptButton
+            text="Começar Projeto"
+            disableScale={true}
+            onClick={(e) => {
+              e.preventDefault();
+              const contactSection = document.getElementById("contact");
+              if (contactSection) {
+                contactSection.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="w-full text-xs py-1.5 px-2"
+          />
+        </div>
       </div>
 
       <div className="absolute -bottom-72 left-[50%] h-96 w-96 -translate-x-[50%] rounded-full bg-primary opacity-20" />

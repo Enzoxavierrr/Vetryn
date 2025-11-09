@@ -1,31 +1,25 @@
 import { motion } from "framer-motion";
 import { IconArrowRight } from "@tabler/icons-react";
 import TextAnimation from "@/components/ui/scroll-text";
-// import ParticleRing from "./ParticleRing"; // Temporariamente comentado
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light">
-      {/* Particle Ring Background */}
-      {/* Temporariamente comentado para debug */}
-      {/* <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <ParticleRing />
-      </div> */}
 
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0YzAtMS4xLS45LTItMi0ySDI2Yy0xLjEgMC0yIC45LTIgMnY4YzAgMS4xLjkgMiAyIDJoOGMxLjEgMCAyLS45IDItMnYtOHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
 
-      <div className="container mx-auto px-4 relative z-10 py-20">
+      <div className="container mx-auto px-4 relative z-20 py-20">
         <div className="flex flex-col items-center justify-center min-h-[80vh]">
           {/* Company Name and Content - Centered */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center max-w-4xl mx-auto relative z-30"
           >
             <div className="mb-10">
               <TextAnimation
-                text="Vetryn"
+                text="Vetryn Labs"
                 as="h1"
                 letterAnime={true}
                 direction="down"

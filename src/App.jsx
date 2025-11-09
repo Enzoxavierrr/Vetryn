@@ -1,7 +1,7 @@
-import React from "react";
 import NavbarDemo from "@/components/NavbarDemo";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import WebsiteBenefits from "@/components/WebsiteBenefits";
 import Services from "@/components/Services";
 import MacbookShowcase from "@/components/MacbookShowcase";
 import Process from "@/components/Process";
@@ -15,6 +15,7 @@ function App() {
       <NavbarDemo />
       <Hero />
       <About />
+      <WebsiteBenefits />
       <Services />
       <MacbookShowcase />
       <Process />

@@ -43,16 +43,30 @@ const steps = [
 ];
 
 const terminalPrompts = [
-  { text: "vetryn@labs:~$ npm init -y", color: "text-green-400" },
-  { text: "✓ Package.json created successfully", color: "text-gray-300" },
-  { text: "vetryn@labs:~$ npm install @vetryn/core", color: "text-green-400" },
-  { text: "✓ Dependencies installed", color: "text-gray-300" },
-  { text: "vetryn@labs:~$ vetryn build", color: "text-green-400" },
-  { text: "✓ Building your project...", color: "text-yellow-400" },
-  { text: "✓ Build completed successfully!", color: "text-green-300" },
-  { text: "vetryn@labs:~$ vetryn deploy", color: "text-green-400" },
-  { text: "✓ Deploying to production...", color: "text-yellow-400" },
-  { text: "✓ Deployment successful!", color: "text-green-300" },
+  {
+    text: "vetryn@labs:~$ git clone https://github.com/vetryn/project.git",
+    color: "text-green-400",
+  },
+  { text: "Cloning into 'project'...", color: "text-gray-300" },
+  {
+    text: "remote: Counting objects: 100% (45/45), done.",
+    color: "text-gray-300",
+  },
+  { text: "vetryn@labs:~$ cd project && npm install", color: "text-green-400" },
+  { text: "added 1247 packages in 2m", color: "text-gray-300" },
+  { text: "vetryn@labs:~/project$ npm run dev", color: "text-green-400" },
+  {
+    text: "✓ Vite server running on http://localhost:5173",
+    color: "text-cyan-400",
+  },
+  { text: "✓ Compiled successfully in 1.2s", color: "text-green-300" },
+  { text: "vetryn@labs:~/project$ npm run build", color: "text-green-400" },
+  { text: "Building for production...", color: "text-yellow-400" },
+  { text: "✓ 1247 modules transformed", color: "text-green-300" },
+  { text: "✓ Build completed in 3.4s", color: "text-green-300" },
+  { text: "vetryn@labs:~/project$ npm run deploy", color: "text-green-400" },
+  { text: "Deploying to production...", color: "text-yellow-400" },
+  { text: "✓ Deployment successful! 🚀", color: "text-green-300" },
 ];
 
 export default function ProcessShowcase() {
@@ -74,21 +88,23 @@ export default function ProcessShowcase() {
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
         <div className="flex-1 text-center">
-          <span className="text-xs text-gray-400">vetryn@terminal</span>
+          <span className="text-xs text-gray-400">
+            nossoprocesso@vetrynlabs
+          </span>
         </div>
       </div>
 
       {/* Terminal Content */}
       <div className="relative h-full flex flex-col">
         {/* Terminal Prompts - Top */}
-        <div className="space-y-1 mb-4">
-          {terminalPrompts.slice(0, 4).map((prompt, index) => (
+        <div className="space-y-0.5 mb-4">
+          {terminalPrompts.slice(0, 6).map((prompt, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              className={`text-xs ${prompt.color}`}
+              transition={{ duration: 0.3, delay: index * 0.08 }}
+              className={`text-xs font-mono ${prompt.color}`}
             >
               {prompt.text}
             </motion.div>
@@ -96,13 +112,13 @@ export default function ProcessShowcase() {
         </div>
 
         {/* Processo - Centralizado */}
-        <div className="flex-1 flex items-center justify-center my-8">
+        <div className="flex-1 flex items-center justify-center my-4">
           <div className="w-full max-w-5xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-8"
+              className="text-center mb-4"
             >
               <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto">
                 Um processo estruturado e transparente que garante resultados
@@ -175,14 +191,14 @@ export default function ProcessShowcase() {
         </div>
 
         {/* Terminal Prompts - Bottom */}
-        <div className="space-y-1 mt-4">
-          {terminalPrompts.slice(4).map((prompt, index) => (
+        <div className="space-y-0.5 mt-4">
+          {terminalPrompts.slice(6).map((prompt, index) => (
             <motion.div
-              key={index + 4}
+              key={index + 6}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: (index + 4) * 0.1 }}
-              className={`text-xs ${prompt.color}`}
+              transition={{ duration: 0.3, delay: (index + 6) * 0.08 }}
+              className={`text-xs font-mono ${prompt.color}`}
             >
               {prompt.text}
             </motion.div>

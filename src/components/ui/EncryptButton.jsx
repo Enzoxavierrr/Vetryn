@@ -12,6 +12,7 @@ export const EncryptButton = ({
   href,
   className = "",
   icon: Icon = IconRocket,
+  disableScale = false,
 }) => {
   const intervalRef = useRef(null);
   const [displayText, setDisplayText] = useState(text);
@@ -88,22 +89,41 @@ export const EncryptButton = ({
         onMouseLeave={stopScramble}
         className={buttonClasses}
       >
-        <motion.div
-          whileHover={{
-            scale: 1.025,
-          }}
-          whileTap={{
-            scale: 0.975,
-          }}
-          className="relative"
-        >
-          {buttonContent}
-        </motion.div>
+        {disableScale ? (
+          <div className="relative">
+            {buttonContent}
+          </div>
+        ) : (
+          <motion.div
+            whileHover={{
+              scale: 1.025,
+            }}
+            whileTap={{
+              scale: 0.975,
+            }}
+            className="relative"
+          >
+            {buttonContent}
+          </motion.div>
+        )}
       </a>
     );
   }
 
-  return (
+  return disableScale ? (
+    <button
+      onMouseEnter={scramble}
+      onMouseLeave={stopScramble}
+      onClick={onClick}
+      className={buttonClasses}
+      style={{
+        transform: "translateZ(0)",
+        willChange: "auto",
+      }}
+    >
+      {buttonContent}
+    </button>
+  ) : (
     <motion.button
       whileHover={{
         scale: 1.025,

@@ -64,7 +64,7 @@ const TeamMemberCard = ({ member, index }) => {
 const teamMembers = [
   {
     name: "Arthur Maciel",
-    role: "CEO",
+    role: "",
     description:
       "Responsável pela visão e posicionamento da Vetryn Labs. Atua desde a estratégia até o desenvolvimento dos produtos, garantindo direção, qualidade e propósito em cada etapa. Une visão de negócio e prática técnica com foco em resultados reais.",
     initial: "A",
@@ -74,22 +74,12 @@ const teamMembers = [
   },
   {
     name: "Enzo Xavier",
-    role: "CTO",
+    role: "",
     description:
       "Líder da frente técnica e da produção. Especialista em transformar conceitos em código de alta performance, conduz o desenvolvimento com agilidade, precisão e inovação. É o motor que leva as ideias da Vetryn Labs à prática.",
     initial: "E",
     linkedin: "", // Adicione o link do LinkedIn aqui (ex: "https://www.linkedin.com/in/enzo-xavier")
     image: "/images/enzo.jpg", // Terceira imagem - Adicione a foto do Enzo aqui
-    imagePosition: "50% 15%", // Posicionamento da imagem (abaixado um pouco mais)
-  },
-  {
-    name: "Lucas Simão",
-    role: "COO",
-    description:
-      "Equilibra estratégia e execução. Atua na operação e no desenvolvimento para garantir que cada projeto una eficiência, qualidade e propósito. Seu olhar técnico e colaborativo conecta todas as partes do processo.",
-    initial: "L",
-    linkedin: "", // Adicione o link do LinkedIn aqui (ex: "https://www.linkedin.com/in/lucas-simao")
-    image: "/images/lucas.jpg", // Segunda imagem - Adicione a foto do Lucas aqui
     imagePosition: "50% 15%", // Posicionamento da imagem (abaixado um pouco mais)
   },
 ];
@@ -140,14 +130,14 @@ export default function TeamModal({ isOpen, onClose }) {
               <div className="p-6 md:p-8">
                 <div className="mb-8 text-center">
                   <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Três engenheiros de software que compartilham uma missão:
+                    Dois engenheiros de software que compartilham uma missão:
                     transformar ideias em tecnologia de alto impacto. Juntos,
                     formamos o time c-level da Vetryn Labs, unindo estratégia,
                     inovação e execução.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {teamMembers.map((member, index) => (
                     <TeamMemberCard key={index} member={member} index={index} />
                   ))}
