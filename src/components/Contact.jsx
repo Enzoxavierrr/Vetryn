@@ -1,29 +1,226 @@
-import { motion } from "framer-motion";
-import { IconMail, IconPhone, IconMapPin, IconSend } from "@tabler/icons-react";
+import { motion, useAnimate } from "framer-motion";
+import {
+  IconSend,
+  IconBrandLinkedin,
+  IconBrandInstagram,
+  IconMapPin,
+  IconMail,
+  IconBrandGithub,
+  IconBrandWhatsapp,
+  IconUsers,
+  IconUser,
+  IconMessage,
+  IconSparkles,
+} from "@tabler/icons-react";
 import { useState } from "react";
+import TeamModal from "./TeamModal";
+import { SpotlightButton } from "./ui/SpotlightButton";
 
-const contactInfo = [
+const socialLinks = [
   {
-    icon: IconMail,
-    label: "Email",
-    value: "Vetryn.dev@gmail.com",
-    link: "mailto:Vetryn.dev@gmail.com",
+    Icon: IconBrandLinkedin,
+    href: "https://www.linkedin.com/in/vetryn-labs-944a52395/",
+    label: "LinkedIn",
   },
   {
-    icon: IconPhone,
-    label: "Telefone",
-    value: "+55 (51) 99544-1664",
-    link: "tel:+5551995441663",
-  
+    Icon: IconBrandInstagram,
+    href: "https://instagram.com/vetrynlabs",
+    label: "Instagram",
   },
-  
   {
-    icon: IconMapPin,
+    Icon: IconMapPin,
+    href: "https://share.google/1GO9w9aB4jRWXQ8XB",
     label: "Localização",
-    value: "Porto Alegre, Brasil",
-    link: "#",
+  },
+  {
+    Icon: IconMail,
+    href: "mailto:vetrynlabs@gmail.com",
+    label: "Email",
+  },
+  {
+    Icon: IconBrandGithub,
+    href: "https://github.com/Vetryn-Labs",
+    label: "GitHub",
+  },
+  {
+    Icon: IconBrandWhatsapp,
+    href: "https://wa.me/5554984364122",
+    label: "WhatsApp",
   },
 ];
+
+// Clip-path constants
+const NO_CLIP = "polygon(0 0, 100% 0, 100% 100%, 0% 100%)";
+const BOTTOM_RIGHT_CLIP = "polygon(0 0, 100% 0, 0 0, 0% 100%)";
+const TOP_RIGHT_CLIP = "polygon(0 0, 0 100%, 100% 100%, 0% 100%)";
+const BOTTOM_LEFT_CLIP = "polygon(100% 100%, 100% 0, 100% 100%, 0 100%)";
+const TOP_LEFT_CLIP = "polygon(0 0, 100% 0, 100% 100%, 100% 0)";
+
+const ENTRANCE_KEYFRAMES = {
+  left: [BOTTOM_RIGHT_CLIP, NO_CLIP],
+  bottom: [BOTTOM_RIGHT_CLIP, NO_CLIP],
+  top: [BOTTOM_RIGHT_CLIP, NO_CLIP],
+  right: [TOP_LEFT_CLIP, NO_CLIP],
+};
+
+const EXIT_KEYFRAMES = {
+  left: [NO_CLIP, TOP_RIGHT_CLIP],
+  bottom: [NO_CLIP, TOP_RIGHT_CLIP],
+  top: [NO_CLIP, TOP_RIGHT_CLIP],
+  right: [NO_CLIP, BOTTOM_LEFT_CLIP],
+};
+
+const SocialLinkBox = ({ Icon, href, label }) => {
+  const [scope, animate] = useAnimate();
+
+  const getNearestSide = (e) => {
+    const box = e.target.getBoundingClientRect();
+
+    const proximityToLeft = {
+      proximity: Math.abs(box.left - e.clientX),
+      side: "left",
+    };
+    const proximityToRight = {
+      proximity: Math.abs(box.right - e.clientX),
+      side: "right",
+    };
+    const proximityToTop = {
+      proximity: Math.abs(box.top - e.clientY),
+      side: "top",
+    };
+    const proximityToBottom = {
+      proximity: Math.abs(box.bottom - e.clientY),
+      side: "bottom",
+    };
+
+    const sortedProximity = [
+      proximityToLeft,
+      proximityToRight,
+      proximityToTop,
+      proximityToBottom,
+    ].sort((a, b) => a.proximity - b.proximity);
+
+    return sortedProximity[0].side;
+  };
+
+  const handleMouseEnter = (e) => {
+    const side = getNearestSide(e);
+    animate(scope.current, {
+      clipPath: ENTRANCE_KEYFRAMES[side],
+    });
+  };
+
+  const handleMouseLeave = (e) => {
+    const side = getNearestSide(e);
+    animate(scope.current, {
+      clipPath: EXIT_KEYFRAMES[side],
+    });
+  };
+
+  const isInternalLink = href.startsWith("#");
+
+  return (
+    <a
+      href={href}
+      target={isInternalLink ? undefined : "_blank"}
+      rel={isInternalLink ? undefined : "noopener noreferrer"}
+      aria-label={label}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="relative grid h-full w-full place-content-center transition-all duration-300"
+    >
+      <Icon className="text-xl sm:text-3xl lg:text-4xl text-primary-dark" />
+
+      <div
+        ref={scope}
+        style={{
+          clipPath: BOTTOM_RIGHT_CLIP,
+        }}
+        className="absolute inset-0 grid place-content-center bg-primary text-white"
+      >
+        <Icon className="text-xl sm:text-3xl md:text-4xl" />
+      </div>
+    </a>
+  );
+};
+
+const TeamLinkBox = ({ Icon, label, onClick }) => {
+  const [scope, animate] = useAnimate();
+
+  const getNearestSide = (e) => {
+    const box = e.target.getBoundingClientRect();
+
+    const proximityToLeft = {
+      proximity: Math.abs(box.left - e.clientX),
+      side: "left",
+    };
+    const proximityToRight = {
+      proximity: Math.abs(box.right - e.clientX),
+      side: "right",
+    };
+    const proximityToTop = {
+      proximity: Math.abs(box.top - e.clientY),
+      side: "top",
+    };
+    const proximityToBottom = {
+      proximity: Math.abs(box.bottom - e.clientY),
+      side: "bottom",
+    };
+
+    const sortedProximity = [
+      proximityToLeft,
+      proximityToRight,
+      proximityToTop,
+      proximityToBottom,
+    ].sort((a, b) => a.proximity - b.proximity);
+
+    return sortedProximity[0].side;
+  };
+
+  const handleMouseEnter = (e) => {
+    const side = getNearestSide(e);
+    animate(scope.current, {
+      clipPath: ENTRANCE_KEYFRAMES[side],
+    });
+  };
+
+  const handleMouseLeave = (e) => {
+    const side = getNearestSide(e);
+    animate(scope.current, {
+      clipPath: EXIT_KEYFRAMES[side],
+    });
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      aria-label={label}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="relative grid h-full w-full place-content-center transition-all duration-300 cursor-pointer bg-white border border-primary-dark overflow-hidden"
+      style={{ backgroundColor: "white" }}
+    >
+      {/* Fundo branco garantido */}
+      <div className="absolute inset-0 bg-white z-0"></div>
+
+      {/* Ícone inicial - sempre visível no fundo branco */}
+      <div className="relative z-10 w-full h-full grid place-content-center pointer-events-none">
+        <Icon className="text-xl sm:text-3xl lg:text-4xl text-primary-dark" />
+      </div>
+
+      {/* Overlay verde - aparece no hover */}
+      <div
+        ref={scope}
+        style={{
+          clipPath: BOTTOM_RIGHT_CLIP,
+        }}
+        className="absolute inset-0 grid place-content-center bg-primary z-30 pointer-events-none"
+      >
+        <Icon className="text-xl sm:text-3xl md:text-4xl text-white relative z-40" />
+      </div>
+    </button>
+  );
+};
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -32,6 +229,7 @@ export default function Contact() {
     subject: "",
     message: "",
   });
+  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,7 +247,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-gradient-to-b from-gray-50 to-primary-dark/5">
+    <section
+      id="contact"
+      className="py-24 bg-gradient-to-b from-gray-50 to-primary-dark/5"
+    >
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -63,52 +264,62 @@ export default function Contact() {
           </h2>
           <div className="w-24 h-1 bg-primary mx-auto mb-6 rounded-full"></div>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Estamos prontos para ajudar você a transformar suas ideias em realidade. 
-            Entre em contato e vamos conversar!
+            Estamos prontos para ajudar você a transformar suas ideias em
+            realidade. Entre em contato e vamos conversar!
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Info */}
+          {/* Social Media Links */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="flex flex-col"
           >
-            <div>
-              <h3 className="text-2xl font-bold text-primary-dark mb-4">
-                Vamos conversar?
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Estamos sempre abertos para discutir novos projetos, 
-                ideias criativas ou oportunidades de fazer parte de seus planos.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <motion.a
-                  key={index}
-                  href={info.link}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group flex items-center gap-4 p-4 rounded-xl bg-white border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all duration-300"
-                >
-                  <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                    <info.icon className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 mb-1">{info.label}</p>
-                    <p className="font-semibold text-primary-dark group-hover:text-primary transition-colors">
-                      {info.value}
-                    </p>
-                  </div>
-                </motion.a>
-              ))}
+            <div className="divide-y divide-primary-dark border border-primary-dark rounded-lg overflow-hidden bg-white flex-1 flex flex-col h-full">
+              <div className="grid grid-cols-2 divide-x divide-primary-dark flex-1">
+                <SocialLinkBox
+                  Icon={socialLinks[0].Icon}
+                  href={socialLinks[0].href}
+                  label={socialLinks[0].label}
+                />
+                <SocialLinkBox
+                  Icon={socialLinks[1].Icon}
+                  href={socialLinks[1].href}
+                  label={socialLinks[1].label}
+                />
+              </div>
+              <div className="grid grid-cols-3 divide-x divide-primary-dark flex-1">
+                <SocialLinkBox
+                  Icon={socialLinks[2].Icon}
+                  href={socialLinks[2].href}
+                  label={socialLinks[2].label}
+                />
+                <SocialLinkBox
+                  Icon={socialLinks[3].Icon}
+                  href={socialLinks[3].href}
+                  label={socialLinks[3].label}
+                />
+                <SocialLinkBox
+                  Icon={socialLinks[4].Icon}
+                  href={socialLinks[4].href}
+                  label={socialLinks[4].label}
+                />
+              </div>
+              <div className="grid grid-cols-2 divide-x divide-primary-dark flex-1">
+                <SocialLinkBox
+                  Icon={socialLinks[5].Icon}
+                  href={socialLinks[5].href}
+                  label={socialLinks[5].label}
+                />
+                <TeamLinkBox
+                  Icon={IconUsers}
+                  label="Quem Somos"
+                  onClick={() => setIsTeamModalOpen(true)}
+                />
+              </div>
             </div>
           </motion.div>
 
@@ -121,12 +332,31 @@ export default function Contact() {
             onSubmit={handleSubmit}
             className="space-y-6"
           >
-            <div className="p-8 rounded-2xl bg-white border border-gray-200 shadow-lg">
+            <div className="p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-200 shadow-xl">
+              {/* Welcome Message */}
+              <div className="mb-6 pb-6 border-b border-gray-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <IconSparkles className="w-5 h-5 text-primary" />
+                  <h3 className="text-xl font-bold text-primary-dark">
+                    Vamos conversar?
+                  </h3>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Estamos aqui para ajudar! Não importa o tamanho do seu
+                  projeto, queremos ouvir suas ideias. Envie uma mensagem e
+                  vamos transformar sua visão em realidade. ✨
+                </p>
+              </div>
+
               <div className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Nome
+                    <label
+                      htmlFor="name"
+                      className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2"
+                    >
+                      <IconUser className="w-4 h-4 text-primary" />
+                      Como podemos te chamar?
                     </label>
                     <input
                       type="text"
@@ -135,14 +365,18 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                      placeholder="Seu nome"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white hover:border-gray-300"
+                      placeholder="Seu nome ou apelido"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email
+                    <label
+                      htmlFor="email"
+                      className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2"
+                    >
+                      <IconMail className="w-4 h-4 text-primary" />
+                      Seu melhor email
                     </label>
                     <input
                       type="email"
@@ -151,15 +385,18 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white hover:border-gray-300"
                       placeholder="seu@email.com"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                    Assunto
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Sobre o que você quer falar?
                   </label>
                   <input
                     type="text"
@@ -168,14 +405,18 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                    placeholder="Qual é o assunto?"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all bg-white hover:border-gray-300"
+                    placeholder="Ex: Novo projeto, dúvidas, orçamento..."
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Mensagem
+                  <label
+                    htmlFor="message"
+                    className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2"
+                  >
+                    <IconMessage className="w-4 h-4 text-primary" />
+                    Conte-nos tudo! (sem pressão 😊)
                   </label>
                   <textarea
                     id="message"
@@ -184,24 +425,34 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
-                    placeholder="Conte-nos mais sobre seu projeto..."
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all resize-none bg-white hover:border-gray-300"
+                    placeholder="Fique à vontade para contar sobre seu projeto, ideias, dúvidas ou qualquer coisa que quiser compartilhar conosco. Estamos ansiosos para saber mais!"
                   />
                 </div>
 
-                <button
+                <SpotlightButton
                   type="submit"
-                  className="w-full px-8 py-4 bg-gradient-to-r from-primary to-primary-light text-white font-bold rounded-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-primary to-primary-light text-white font-bold rounded-xl hover:shadow-2xl"
                 >
-                  <IconSend className="w-5 h-5" />
-                  Enviar Mensagem
-                </button>
+                  <div className="flex items-center justify-center gap-2">
+                    <IconSend className="w-5 h-5" />
+                    <span>Fale conosco</span>
+                    <span className="text-sm opacity-80">
+                      (prometemos responder rápido!)
+                    </span>
+                  </div>
+                </SpotlightButton>
               </div>
             </div>
           </motion.form>
         </div>
       </div>
+
+      {/* Team Modal */}
+      <TeamModal
+        isOpen={isTeamModalOpen}
+        onClose={() => setIsTeamModalOpen(false)}
+      />
     </section>
   );
 }
-

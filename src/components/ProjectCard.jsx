@@ -1,5 +1,9 @@
 import { motion } from "framer-motion";
-import { IconExternalLink, IconCode, IconArrowRight } from "@tabler/icons-react";
+import {
+  IconExternalLink,
+  IconCode,
+  IconArrowRight,
+} from "@tabler/icons-react";
 import { useState } from "react";
 
 export default function ProjectCard({ project, index }) {
@@ -28,10 +32,10 @@ export default function ProjectCard({ project, index }) {
             <IconCode className="w-20 h-20 text-primary/30" />
           </div>
         )}
-        
+
         {/* Overlay gradient on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        
+
         {/* Tags overlay */}
         <div className="absolute top-4 left-4 flex flex-wrap gap-2">
           {project.tags?.map((tag, tagIndex) => (
@@ -114,4 +118,3 @@ export default function ProjectCard({ project, index }) {
     </motion.div>
   );
 }
-
