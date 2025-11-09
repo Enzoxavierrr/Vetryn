@@ -1,8 +1,26 @@
 import { motion } from "framer-motion";
 import { IconArrowRight } from "@tabler/icons-react";
 import TextAnimation from "@/components/ui/scroll-text";
+import { useEffect, useRef } from "react";
 
 export default function Hero() {
+  const splineViewerRef = useRef(null);
+
+  useEffect(() => {
+    // Carregar o script do Spline Viewer dinamicamente
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'https://unpkg.com/@splinetool/viewer@1.10.97/build/spline-viewer.js';
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup: remover o script quando o componente desmontar
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+    };
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light">
 
@@ -38,7 +56,7 @@ export default function Hero() {
                 initial={{ width: 0 }}
                 animate={{ width: "120px" }}
                 transition={{ duration: 1, delay: 0.8 }}
-                className="h-1 bg-gradient-to-r from-transparent via-primary-content to-transparent mx-auto rounded-full"
+                className="h-1 bg-gradient-to-r from-primary-content via-primary-content to-transparent rounded-full"
               />
             </div>
 
@@ -83,7 +101,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+              className="flex flex-col sm:flex-row gap-6 items-center sm:items-start"
             >
               <a
                 href="#projects"
@@ -140,7 +158,25 @@ export default function Hero() {
               </a>
             </motion.div>
           </motion.div>
+
+          {/* 3D Spline Animation - Right Side (Square and larger) */}
+          <div className="flex-1 w-full lg:flex-none lg:w-auto lg:basis-1/2 relative">
+            <div className="w-full lg:max-w-none relative">
+              <div className="relative w-full max-w-[1200px] aspect-[4/3] md:aspect-video overflow-hidden ring-1 ring-white/10">
+                <div className="absolute inset-0">
+                  <spline-viewer
+                    loading-anim-type="spinner-small-dark"
+                    url="https://prod.spline.design/HEFHEapkcxW232BX/scene.splinecode"
+                    class="block origin-center scale-[0.1] md:scale-100"
+                    style={{ width: '100%', height: '100%', display: 'block' }}
+                  >
+                  </spline-viewer>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
 
         {/* Scroll Indicator */}
         <motion.div
@@ -162,6 +198,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
       </div>
+
     </section>
   );
 }
