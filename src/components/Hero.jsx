@@ -162,7 +162,7 @@ export default function Hero() {
           {/* 3D Spline Animation - Right Side (Square and larger) */}
           <div className="flex-1 w-full lg:flex-none lg:w-auto lg:basis-1/2 relative">
             <div className="w-full lg:max-w-none relative">
-              <div className="relative w-full max-w-[1200px] aspect-[4/3] md:aspect-video overflow-hidden ring-1 ring-white/10">
+              <div className="relative w-full max-w-[1200px] aspect-[4/3] md:aspect-video overflow-hidden">
                 <div className="absolute inset-0">
                   <spline-viewer
                     loading-anim-type="spinner-small-dark"
