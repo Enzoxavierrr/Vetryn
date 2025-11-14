@@ -230,13 +230,51 @@ export default function Contact() {
     message: "",
   });
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui você pode adicionar a lógica de envio do formulário
-    console.log("Form submitted:", formData);
-    alert("Mensagem enviada com sucesso! Entraremos em contato em breve.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('http://localhost:3001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        throw new Error('Erro ao processar resposta do servidor. Verifique se o servidor está rodando.');
+      }
+
+      if (response.ok && data.success) {
+        setSubmitStatus('success');
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        // Limpar mensagem de sucesso após 5 segundos
+        setTimeout(() => setSubmitStatus(null), 5000);
+      } else {
+        setSubmitStatus('error');
+        // Mostrar mensagem específica do servidor
+        const errorMessage = data?.message || 'Erro desconhecido ao enviar mensagem.';
+        console.error('Erro ao enviar:', errorMessage);
+        // Atualizar estado com mensagem específica
+        setSubmitStatus(`error:${errorMessage}`);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      const errorMessage = error.message || 'Não foi possível conectar ao servidor. Verifique se o servidor está rodando na porta 3001.';
+      console.error('Erro ao enviar mensagem:', error);
+      setSubmitStatus(`error:${errorMessage}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -430,16 +468,45 @@ export default function Contact() {
                   />
                 </div>
 
+                {/* Mensagens de status */}
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-50 border-2 border-green-200 rounded-xl text-green-800 text-sm">
+                    ✅ Mensagem enviada com sucesso! Entraremos em contato em breve.
+                  </div>
+                )}
+                {submitStatus && submitStatus.startsWith('error:') && (
+                  <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-800 text-sm">
+                    ❌ {submitStatus.replace('error:', '')}
+                  </div>
+                )}
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-800 text-sm">
+                    ❌ Erro ao enviar mensagem. Por favor, tente novamente ou entre em contato diretamente pelo email.
+                  </div>
+                )}
+
                 <SpotlightButton
                   type="submit"
-                  className="w-full bg-gradient-to-r from-primary to-primary-light text-white font-bold rounded-xl hover:shadow-2xl"
+                  disabled={isSubmitting}
+                  className={`w-full bg-gradient-to-r from-primary to-primary-light text-white font-bold rounded-xl hover:shadow-2xl ${
+                    isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
                 >
                   <div className="flex items-center justify-center gap-2">
-                    <IconSend className="w-5 h-5" />
-                    <span>Fale conosco</span>
-                    <span className="text-sm opacity-80">
-                      (prometemos responder rápido!)
-                    </span>
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Enviando...</span>
+                      </>
+                    ) : (
+                      <>
+                        <IconSend className="w-5 h-5" />
+                        <span>Fale conosco</span>
+                        <span className="text-sm opacity-80">
+                          (prometemos responder rápido!)
+                        </span>
+                      </>
+                    )}
                   </div>
                 </SpotlightButton>
               </div>
